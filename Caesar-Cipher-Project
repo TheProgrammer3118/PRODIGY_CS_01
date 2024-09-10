@@ -1,0 +1,42 @@
+import string
+
+def caesar_cipher(message, shift, mode):
+    shift %= 26
+    if mode == 'decrypt':
+        shift = -shift
+
+    result = []
+    for char in message:
+        if char in string.ascii_letters:
+            base = ord('A') if char.isupper() else ord('a')
+            new_char = chr(base + (ord(char) - base + shift) % 26)
+            result.append(new_char)
+        else:
+            result.append(char)
+    return ''.join(result)
+
+def main():
+    print("Caesar Cipher Program")
+    while True:
+        mode = input("Type 'encrypt' to encrypt a message or 'decrypt' to decrypt a message: ").strip().lower()
+        if mode in ['encrypt', 'decrypt']:
+            break
+        print("Invalid mode. Please type 'encrypt' or 'decrypt'.")
+    
+    message = input("Enter the message: ")
+    
+    while True:
+        try:
+            shift = int(input("Enter the shift value (integer): "))
+            break
+        except ValueError:
+            print("Invalid shift value. Please enter an integer.")
+    
+    result = caesar_cipher(message, shift, mode)
+    if mode == 'encrypt':
+        print("Encrypted message:", result)
+    else:
+        print("Decrypted message:", result)
+
+if __name__ == "__main__":
+    main()
